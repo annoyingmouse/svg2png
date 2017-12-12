@@ -40,20 +40,28 @@ if(getInternetExplorerVersion() === 11){
                 if (this.readyState === 4 && this.status === 200) {
                     // Get the XML string
                     const xmlString = this.responseText;
-                    // Create a parse
-                    const parser = new DOMParser();
-                    // Parse the XML string as XML
-                    const svgDoc = parser.parseFromString(xmlString, "text/xml");
-                    // Get the specific SVG from the parsed SVG
-                    const glyph = svgDoc.getElementById(hrefParts[1]);
-                    // Create an SVG serializer
-                    const XMLS = new XMLSerializer();
-                    // Convert the SVG XML into a string
-                    const svgStr = XMLS.serializeToString(glyph);
-                    // Create a Blob from the string
-                    const svgBlob = new Blob([svgStr], {
-                        "type": 'image/svg+xml;charset=utf-8'
-                    });
+                    let svgBlob = null;
+                    // If there's only the one glyph in the SVG:
+                    if(hrefParts.length === 1){
+                        svgBlob = new Blob([this.responseText], {
+                            "type": 'image/svg+xml;charset=utf-8'
+                        });
+                    }else{ // If we're looking at an ID within the SVG:
+                        // Create a parser
+                        const parser = new DOMParser();
+                        // Parse the XML string as XML
+                        const svgDoc = parser.parseFromString(xmlString, "text/xml");
+                        // Get the specific SVG from the parsed SVG
+                        const glyph = svgDoc.getElementById(hrefParts[1]);
+                        // Create an SVG serializer
+                        const XMLS = new XMLSerializer();
+                        // Convert the SVG XML into a string
+                        const svgStr = XMLS.serializeToString(glyph);
+                        // Create a Blob from the string
+                        svgBlob = new Blob([svgStr], {
+                            "type": 'image/svg+xml;charset=utf-8'
+                        });
+                    }
                     // Create an URL from the Blob
                     const url = URL.createObjectURL(svgBlob);
                     // Create an IMG tag
