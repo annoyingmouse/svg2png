@@ -28,8 +28,22 @@ if(getInternetExplorerVersion() === 11){
                     const xmlString = this.responseText;
                     const parser = new DOMParser();
                     const svgDoc = parser.parseFromString(xmlString, "text/xml");
-                    const glyph = (hrefParts.length > 1) ? svgDoc.getElementById(hrefParts[1]) : svgDoc;
-                    console.log(glyph);
+                    // console.log(svgDoc);
+                    const glyph = svgDoc.getElementById(hrefParts[1]);
+                    // console.log(glyph);
+                    const XMLS = new XMLSerializer();
+                    const svgStr = XMLS.serializeToString(glyph);
+                    // console.log(svgStr);
+                    const svgBlob = new Blob([svgStr]);
+                    // console.log(svgBlob);
+                    const domURL = self.URL; // || self.webkitURL || self;
+                    const url = domURL.createObjectURL(svgBlob);
+                    // console.log(url);
+                    const img = new Image;
+                    img.onload = function(){
+
+                    }
+
 
                 }
             };
@@ -41,3 +55,16 @@ if(getInternetExplorerVersion() === 11){
 
 
 }
+
+const XMLtoString = (elem) => {
+    let serialized = null;
+    try {
+        // XMLSerializer exists in current Mozilla browsers
+        const serializer = new XMLSerializer();
+        serialized = serializer.serializeToString(elem);
+    }catch (e) {
+        // Internet Explorer has a different approach to serializing XML
+        serialized = elem.xml;
+    }
+    return serialized;
+};
