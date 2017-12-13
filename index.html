@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>SVG2PNG</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
     </head>
     <body>
         <div>
@@ -11,6 +12,10 @@
             <svg viewBox="0 0 60 60" width="60" height="60">
                 <use xlink:href="img/snowman.svg#Capa_1"></use>
             </svg>
+        </div>
+        <div id="target">
+            <p>SVG as PNG</p>
+            <canvas id="canvas1" width="60" height="60"></canvas>
         </div>
         <div>
             <p>This is what we want above</p>
