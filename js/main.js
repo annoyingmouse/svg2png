@@ -21,7 +21,9 @@ var getInternetExplorerVersion = function getInternetExplorerVersion() {
 // If we're looking at IE11
 if (getInternetExplorerVersion() === 11) {
     (function () {
+        // Create a canvas
         var canvas = document.createElement("canvas");
+        // Get the 2d context of the canvas
         var ctx = canvas.getContext("2d");
         var target = document.getElementById("target");
         target.appendChild(canvas);
@@ -86,40 +88,12 @@ if (getInternetExplorerVersion() === 11) {
                             svgElement.parentNode.replaceChild(img, svgElement);
                             // ... and tidy up after ourselves.
                             URL.revokeObjectURL(url);
-
-                            //const injectedImage = document.getElementById(`svg${i}Created`);
-                            var canvas1 = document.getElementById('canvas1');
-                            var context = canvas1.getContext('2d');
-                            context.drawImage(img, 0, 0, img.width, img.height);
-                            window.navigator.msSaveBlob(canvas.msToBlob(), "snowman.png");
-
-                            // const cloned = document.createElement("canvas");
-                            // const context = cloned.getContext("2d");
-                            // cloned.width = width;
-                            // cloned.height = height;
-                            // context.drawImage(canvas, 0, 0);
-                            // target.appendChild(cloned);
-                            // const blob = canvas.msToBlob();
-                            // window.navigator.msSaveBlob(blob, "snowman.png");
-
-
-                            // window.navigator.msSaveBlob(canvas, 'snowman.png');
-                            //window.navigator.msSaveBlob(blob, 'dicomimage.png'););
-
-                            // const pngImg = new Image;
-                            // pngImg.onload = function(){
-                            //     target.appendChild(pngImg)
-                            // };
-                            // pngImg.src = cloned.toDataURL();
-                            // pngImg.height = height;
-                            // pngImg.width = width;
                         };
                         // Set the IMG tag to have the src of the URL
                         img.src = url;
                         // Set its height and width
                         img.height = height;
                         img.width = width;
-                        img.id = 'svg' + i + 'Created';
                     }
                 };
                 // Grab the SVG element
@@ -132,4 +106,28 @@ if (getInternetExplorerVersion() === 11) {
             _loop(i);
         }
     })();
+} else {
+    var svgs = document.getElementsByTagName("svg");
+    var _svgElement = svgs[0];
+    var useElement = _svgElement.getElementsByTagName("use");
+    var xLink = useElement[0].getAttributeNS('http://www.w3.org/1999/xlink', 'href');
+    var xLinkParts = xLink.split("#");
+    var request = new XMLHttpRequest();
+    request.open("GET", xLinkParts[0], true);
+    request.onload = function () {
+        if (request.status >= 200 && request.status < 400) {
+            // Success!
+            var doc = new DOMParser().parseFromString(request.responseText, 'text/xml');
+            var icon = doc.getElementById(xLinkParts[1]);
+            console.log(icon.outerHTML);
+        } else {
+            // We reached our target server, but it returned an error
+        }
+    };
+
+    request.onerror = function () {
+        // There was a connection error of some sort
+    };
+
+    request.send();
 }
