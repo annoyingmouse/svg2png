@@ -109,6 +109,7 @@ if (getInternetExplorerVersion() === 11) {
 } else {
     var svgs = document.getElementsByTagName("svg");
     var FFtarget = document.getElementById("FFtarget");
+    var originalViewBox = FFtarget.getAttribute("viewBox");
     var _svgElement = svgs[0];
     var useElement = _svgElement.getElementsByTagName("use");
     var xLink = useElement[0].getAttributeNS('http://www.w3.org/1999/xlink', 'href');
@@ -117,9 +118,11 @@ if (getInternetExplorerVersion() === 11) {
     request.open("GET", xLinkParts[0], true);
     request.onload = function () {
         if (request.status >= 200 && request.status < 400) {
-            // Success!
             var doc = new DOMParser().parseFromString(request.responseText, 'text/xml');
             var icon = doc.getElementById(xLinkParts[1]);
+            var newViewBox = icon.getAttribute("viewBox");
+            FFtarget.setAttribute("viewBox", newViewBox);
+            console.log("viewBox", newViewBox);
             console.log(icon.innerHTML);
             FFtarget.innerHTML = icon.innerHTML;
         } else {
