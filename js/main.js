@@ -108,6 +108,7 @@ if (getInternetExplorerVersion() === 11) {
     })();
 } else {
     var svgs = document.getElementsByTagName("svg");
+    var FFtarget = document.getElementById("FFtarget");
     var _svgElement = svgs[0];
     var useElement = _svgElement.getElementsByTagName("use");
     var xLink = useElement[0].getAttributeNS('http://www.w3.org/1999/xlink', 'href');
@@ -119,7 +120,8 @@ if (getInternetExplorerVersion() === 11) {
             // Success!
             var doc = new DOMParser().parseFromString(request.responseText, 'text/xml');
             var icon = doc.getElementById(xLinkParts[1]);
-            console.log(icon.outerHTML);
+            console.log(icon.innerHTML);
+            FFtarget.innerHTML = icon.innerHTML;
         } else {
             // We reached our target server, but it returned an error
         }

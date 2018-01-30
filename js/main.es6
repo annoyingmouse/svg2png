@@ -97,6 +97,7 @@ if(getInternetExplorerVersion() === 11){
     }
 }else{
     const svgs = document.getElementsByTagName("svg");
+    const FFtarget = document.getElementById("FFtarget");
     const svgElement = svgs[0];
     const useElement = svgElement.getElementsByTagName("use");
     const xLink = useElement[0].getAttributeNS('http://www.w3.org/1999/xlink', 'href');
@@ -108,7 +109,8 @@ if(getInternetExplorerVersion() === 11){
             // Success!
             const doc = new DOMParser().parseFromString(request.responseText, 'text/xml');
             let icon = doc.getElementById(xLinkParts[1]);
-            console.log(icon.outerHTML)
+            console.log(icon.innerHTML);
+            FFtarget.innerHTML = icon.innerHTML;
         } else {
             // We reached our target server, but it returned an error
         }
