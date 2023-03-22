@@ -4,7 +4,7 @@
  */
 const getInternetExplorerVersion = () => {
     let rv = -1;
-    const ua = navigator.userAgent;
+    const ua = navigator.userAgent
     if (navigator.appName === 'Microsoft Internet Explorer'){
         if (new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})").exec(ua) !== null){
             rv = parseFloat( RegExp.$1 );
@@ -16,6 +16,8 @@ const getInternetExplorerVersion = () => {
     }
     return rv;
 };
+
+console.log(getInternetExplorerVersion())
 // If we're looking at IE11
 if(getInternetExplorerVersion() === 11){
     // Create a canvas
@@ -98,7 +100,6 @@ if(getInternetExplorerVersion() === 11){
 }else{
     const svgs = document.getElementsByTagName("svg");
     const FFtarget = document.getElementById("FFtarget");
-    const originalViewBox = FFtarget.getAttribute("viewBox");
     const svgElement = svgs[0];
     const useElement = svgElement.getElementsByTagName("use");
     const xLink = useElement[0].getAttributeNS('http://www.w3.org/1999/xlink', 'href');
