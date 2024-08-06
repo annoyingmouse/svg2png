@@ -4,6 +4,7 @@
  * https://community.spiceworks.com/topic/411506-detecting-ie11
  * Not pretty, but it works
  */
+
 var getInternetExplorerVersion = function getInternetExplorerVersion() {
   var rv = -1;
   var ua = navigator.userAgent;
@@ -20,7 +21,7 @@ var getInternetExplorerVersion = function getInternetExplorerVersion() {
 };
 console.log(getInternetExplorerVersion());
 // If we're looking at IE11
-if (getInternetExplorerVersion() === 11) {
+if (getInternetExplorerVersion() === -1) {
   // Create a canvas
   var canvas = document.createElement("canvas");
   // Get the 2d context of the canvas

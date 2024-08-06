@@ -2,6 +2,7 @@
  * https://community.spiceworks.com/topic/411506-detecting-ie11
  * Not pretty, but it works
  */
+
 const getInternetExplorerVersion = () => {
     let rv = -1;
     const ua = navigator.userAgent
