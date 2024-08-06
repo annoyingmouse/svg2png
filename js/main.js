@@ -21,7 +21,7 @@ var getInternetExplorerVersion = function getInternetExplorerVersion() {
 };
 console.log(getInternetExplorerVersion());
 // If we're looking at IE11
-if (getInternetExplorerVersion() === -1) {
+if (getInternetExplorerVersion() === 11) {
   // Create a canvas
   var canvas = document.createElement("canvas");
   // Get the 2d context of the canvas
